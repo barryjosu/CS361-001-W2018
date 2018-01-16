@@ -1,6 +1,6 @@
 # this is a comment
 
-TARGET=first
+TARGET=JamesBarry-barryj-EricSisson-sissone-slides
 
 
 default: pdf
@@ -27,6 +27,8 @@ clean-dvi:
 	rm -f ${TARGET}.dvi
 	rm -f ${TARGET}.out
 	rm -f ${TARGET}.toc
+	rm -f ${TARGET}.nav
+	rm -f ${TARGET}.snm
 
 clean-ps: clean-dvi
 	rm -f ${TARGET}.ps

@@ -1,1 +1,1 @@
-The directory contains the first Latex example.
+The directory contains the LaTex files for our vision statement report.

@@ -1,6 +1,6 @@
 # this is a comment
 
-TARGET=first
+TARGET=JamesBarry-barryj-EricSisson-sissone-doc
 
 
 default: pdf
