@@ -1,0 +1,116 @@
+\documentclass[a4paper]{article}
+
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Assignment 7 - Second Implementation of your System (SIS)}
+\author{ by Group 3 - Plant-Id \\* \\* Team Members: \\* Ethan Ahuja - ahujae \\* Ethan Patterson - patteret \\* James Barry - barryj \\* Evan Brass - brassev \\* \\* Customers: \\* Ethan Ahuja - ahujae \\* Ethan Patterson - patteret}
+\begin{document}
+\maketitle
+\pagebreak
+\tableofcontents
+\pagebreak
+\section{GitHub Link}
+As requested in the assignment description, the GitHub branch for this assignment can be found here: \url{https://github.com/barryjosu/CS361-001-W2018/tree/plant-id-assignment-7}
+
+\section{Product Release}
+Since we are developing an Android application, we are working to make it available for free on the Google Play Store. There is a fee associated with having a Google developer account, so we will likely not accomplish this goal, given the lack of funds available to us. However, the app can be run by building it with Android Studio and running it on an Android phone or Android emulator (built-in in Android Studio). Note that the current prototype was developed for Android version 21, so past versions will very likely not be able to run it. However, versions beyond 21 should be able to run it. We have a GitHub repository we are using to collaborate, and more detailed install instructions can be found there: \\*
+\url{https://github.com/boxman888/Plant-Id-Android}
+\pagebreak
+\section{User Stories}
+\subsection{Story 1}
+\begin{center}\includegraphics[scale=.66]{QuestionIdentification.eps}\end{center}
+User story 1 was the implementation of our plant 20 question identification.This story was implemented by Ethan A, James, Even, and Ethan P during our 3/10/18 meeting, It has not been finished yet, however, we have successfully achieved a basic dissension tree that interacts with the user with yes no questions. We spent aproximatly 3 hours working on this user story so far. During this implementation we learned a great deal more about Android studio and how Java interacts with individual activities. With this knowledge we were able to pass information between different pages and update objects the user interacts with.
+
+We had a second go at this story at our second meeting, mapping out the side of the tree that allows the user to identify trees. The following picture shows our chicken-scratch mapping of this. It is based on information provided by the Oregon State University Department of Forestry\cite{key}. 
+
+\begin{center}\includegraphics[scale=.4]{image1.eps}\end{center}
+
+We will likely not have the plant side ready in time for our presentation due to the schedules of our team, but the tree half adequately demonstrates what our application does. We also added functionality that allows us to change the text displayed on the buttons, so we are still asking binary questions but can go beyond "yes" and "no".
+\pagebreak
+\subsection{Story 4}
+User story 4 was the implementation of correctly identifying plants.  We handled this by catching if the node in the tree is a plant, and then navigating to a new activity and passing the name of the plant to it. This allows us to remove the "yes" or "no" buttons from the bottom of the page. At the moment, it only displays the plant name; we hope to add more information for the plants later in our development. We decided to remove story 2, which allowed the user to send feedback to the developers if the plant was identified incorrectly, and will instead provide a feedback email address for the user to send their feedback too. This allows us to keep our app entirely offline, since feedback was the only user story that required an Internet connection. This is more in line with one of our original goals for the app, which was to keep it entirely offline. This implementation took us approximately 30 min to solve. The state of this story is currently implemented. We did not feel a UML diagram was necessary to accomplish this story.
+\newline
+\subsection{Story 3}
+User story 3 displays an error page to the user if the plant cannot be identified. This is accomplished with an else statement. If the user navigates though the tree and reaches a dead node, or some other anomaly, the user is taken to an error page that informs the user that the application was unable to correctly identify their plant. This implementation took us approximately 30 min to solve. The state of this story is currently implemented. We did not feel a user diagram was necessary to accomplish this story.
+\pagebreak
+\section{Design Changes and Rationale}
+\subsection{Client Meeting: Questions and answers}
+\begin{itemize}
+\item \textit{Is it acceptable to hard code the plant decision tree?:} Yes, Ethan and Ethan were okay with us hard coding the plant decision tree.
+\item \textit{Since the app is entirely offline, is it acceptable to have our feedback page provide a link for emailing your personal email address?:} Yes, except for the personal email account part.  For now you should use feedback@plant-id.org. We can create a feedback email later to actually receive this feedback at.
+\end{itemize}
+\subsection{Schedule Changes}
+We completed all of our stories for this week (2, 3, 4) on time. Moving forward, we will be focused on expanding our database of plants. We will have implemented all of the trees of the Pacific Northwest by 3/12/2018, and hope to implement all the plants by the time of our presentation. However, this may be ambitious, given how many plant genera and species there are compared to tree genera and species. We would also like to expand on story 4 as we expand our database, including fun facts and trivia about the plants to display when an identified plant is displayed. We must work quickly, since we don't know when we are presenting and could be doing so on Tuesday, 3/13/2018. 
+
+\subsection{Requirement Changes}
+We have decided to not include geotagging due to being unable to implement a server to handle remote connections. To implement a server for our Android application would require more time and resources that we currently do not have. It also falls in line with our goals to keep the application entirely offline, although we could potentially implement a queue that would submit this information to a server when a connection is available to the user, which could be implemented given more time.
+\subsection{User Story Changes}
+Due to the removal of geotagging, we modified story 4 to no longer include tracking the users location after the identification of a plant. This would have been used for the collection of plant locations. This data would be used for statistical purposes. We also modified story 2 to now include a back button, allowing the user to go back to the last question asked. We have not implemented this yet, however. In the circumstance where the user goes ahead to the activity that displays a plant, they will have a "return to previous question" button that they can press. This will pass the index of the displayed plant back to the 20 questions interface and load it using the parent of that index. In the circumstance where they are on a question, the back button will simply calculate the parent of the current index and load that. 
+\pagebreak
+\section{Refactoring} The most significant piece of refactoring has been the choice to not implement a large database. Instead, all entries at the moment are hard-coded into the application. Now, both the questions and the plants are stored in a binary search tree allowing us to implement a dichotomous key that will provide the structure of our application. On Android it is more appropriate to cache only the necessary parts of the data in order to save space, but the new scope of our project is much smaller and will not require the amount of space previously envisioned. We could potentially refactor this later, moving all of our information to a database and having the app automatically download the most recent database version when a connection is available, meaning that the user would not have to download updates from the Google Play Store in order to have the most recent binary tree. However, orchestrating this would require too much time, and the simpler solution we have developed is better as a proof of concept. 
+
+We compartmentalized our code as much as we could, breaking large functions into sleeker methods. An example of this was turning our statements for printing different types of information to the screen into one universal function. As we write our code using pair programming we are vigilant for potential bad smells, and as such are constantly trying to better our code and increase readability. 
+
+\pagebreak
+\section{Unit Tests}
+As mentioned in assignment 6, our first unit testing methodology was simply sending a series of "yes" and "no" answers to the binary tree and asserting that the result was correct. Now, we have an actual user interface with "yes" and "no" buttons that regenerate the page based on what button was pressed. Because of this, we had to create a new method of unit testing. This process is semi-automated, but it unfortunately cannot assert that the result is correct on its own. A user must monitor the tests to check the results.
+
+This new method uses Ranorex, an Android testing API, to simulate a series of screen taps. We developed a test for each plant currently in the tree, and then verified that the final result was correct. We also did some manual testing during our prototyping, tapping through the tree on our own and making sure that the result was correct. This is the only new feature we developed this week, so it was all we needed to test. Since all results were hard-coded, we hard-coded test cases to verify every result. Also, since all of our functions are called by on-clicks, we didn't have to worry about function calls or anything related to that; we just needed to give our inputs to Ranorex. 
+
+Through testing, we discovered that it was possible to press the "back" button that is physically built in to Android phones to go back to the questions page after reaching the results page, causing the index to not be reinitialized and allowing for a possible out-of-range error that crashed the app. We fixed this by reinitializing the index to 0 when a final result is reached, causing the question run to reset to the first question if the user goes back. This was the only major bug we encountered during testing, and manual testing proved more useful for the current state of our program. We did run into bugs along the way, but encountered them immediately and corrected them quickly. These were just the kind of bugs that arise when working with a new language or IDE, since none of us are familiar with Android development. We had many syntax errors, such as null-pointer exceptions, that caused the app to crash on launch.
+
+To make our tests a bit more automated, we ended up having Ranorex take a screenshot at the end of every test run so that it could run through every test without any user interaction. This way, we were able to review the result of every test after the fact. We did not discover any more bugs through this testing, but it was an interesting exercise in Android automated testing. We are looking to use this to have an automated presentation for our application on presentation day, but are still working out the details.
+
+\pagebreak
+\section{Meeting Report}
+\textbf{03/10/2018 (1:00pm - 6:00pm):} Johnson Hall - Room 219
+\begin{itemize}
+\item James and Ethan P did paired programming for the first hour, and then Evan and Ethan A showed up and helped for the next three hours. All of us worked together on the same user stories in quad-programming, since we had three very closely-tied user stories this week. The last hour was spent on documentation.
+\item We plan to meet 3/11 to add more plants to our tree, since our selection is very limited at this point.
+\item Our customers met and participated and were reasonable with their requirements for the team.
+\end{itemize}
+\textbf{03/11/2018 (2:00pm - 6:30pm):} Johnson Hall - Room 219
+\begin{itemize}
+\item Ethan P, Ethan A, and James met to expand our database and finish documentation.
+\item Our customers met and participated and were reasonable with their requirements for the team.
+\end{itemize}
+
+\newpage %Move references to the next page..
+\begin{thebibliography}{9}
+\bibitem{latexcompanion} 
+\url{http://www.saedsayad.com/decision_tree.htm}
+Dr. Saed Sayad, Reading, www, 2010-2018.
+\bibitem{einstein} 
+Victor Lavrenko.
+\url{https://www.youtube.com/watch?v=eKD5gxPPeY0&list=PLBv09BD7ez_4temBw7vLA19p3tdQH6FYO}
+\textit{School of Informatics} 
+[\textit{Decision Trees}]. 
+Victor Lavrenko and Nigel Goddard, January 19, 2014.
+\bibitem{3blueOneBrown}
+[\textit{Neural Network}]
+YouTube, YouTube, 5 Oct. 2017, \url{www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi}
+\bibitem{Nielsen, Michael A}
+[\textit{Neural Network}
+Nielsen, Michael A. “Neural Networks and Deep Learning.” Neural networks and deep learning, Determination Press, 1 Jan. 1970,\url{ neuralnetworksanddeeplearning.com/}.
+\bibitem{patterns}
+Design Patterns and Criticisms
+\url{https://sourcemaking.com/design_patterns}
+\bibitem{key} 
+Dichotomous Identification Key: Common Trees of the Pacific Northwest
+\url{https://oregonstate.edu/trees/dichotomous_key.html}
+\end{thebibliography}
+
+\end{document}
